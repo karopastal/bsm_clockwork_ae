@@ -1,0 +1,29 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{General comments}{}% 2
+\BOOKMARK [1][-]{section.3}{Signal generation}{}% 3
+\BOOKMARK [2][-]{subsection.3.1}{Couplings.py}{section.3}% 4
+\BOOKMARK [2][-]{subsection.3.2}{Basic.py}{section.3}% 5
+\BOOKMARK [2][-]{subsection.3.3}{KKcascade.py}{section.3}% 6
+\BOOKMARK [2][-]{subsection.3.4}{PDFcalc.py}{section.3}% 7
+\BOOKMARK [2][-]{subsection.3.5}{Luminosity.py}{section.3}% 8
+\BOOKMARK [2][-]{subsection.3.6}{Graviton.py}{section.3}% 9
+\BOOKMARK [2][-]{subsection.3.7}{Smearing.py}{section.3}% 10
+\BOOKMARK [2][-]{subsection.3.8}{Background.py}{section.3}% 11
+\BOOKMARK [2][-]{subsection.3.9}{SBLD.py}{section.3}% 12
+\BOOKMARK [2][-]{subsection.3.10}{Merger.py}{section.3}% 13
+\BOOKMARK [2][-]{subsection.3.11}{WT.py}{section.3}% 14
+\BOOKMARK [2][-]{subsection.3.12}{A\137ExampleA.py}{section.3}% 15
+\BOOKMARK [1][-]{section.4}{Classifier}{}% 16
+\BOOKMARK [2][-]{subsection.4.1}{A\137ExampleB.py}{section.4}% 17
+\BOOKMARK [1][-]{section.5}{Autoencoder}{}% 18
+\BOOKMARK [2][-]{subsection.5.1}{LSign.py}{section.5}% 19
+\BOOKMARK [2][-]{subsection.5.2}{TestS.py}{section.5}% 20
+\BOOKMARK [2][-]{subsection.5.3}{A\137ExampleC1.py}{section.5}% 21
+\BOOKMARK [2][-]{subsection.5.4}{A\137ExampleC2.py}{section.5}% 22
+\BOOKMARK [1][-]{section.6}{Region finder}{}% 23
+\BOOKMARK [2][-]{subsection.6.1}{A\137ExampleD1.py}{section.6}% 24
+\BOOKMARK [2][-]{subsection.6.2}{A\137ExampleD2.py}{section.6}% 25
+\BOOKMARK [2][-]{subsection.6.3}{A\137ExampleD3.py}{section.6}% 26
+\BOOKMARK [1][-]{section.7}{Fourier analysis}{}% 27
+\BOOKMARK [2][-]{subsection.7.1}{FT.py}{section.7}% 28
+\BOOKMARK [2][-]{subsection.7.2}{A\137ExampleE.py}{section.7}% 29

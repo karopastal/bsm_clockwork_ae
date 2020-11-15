@@ -1,0 +1,10 @@
+Results
+
+M5:
+7000
+k:
+750
+Expected average significance:
+0.10065600000000008
+Expected median significance:
+0.032000000000000015
