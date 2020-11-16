@@ -12,8 +12,14 @@ import matplotlib.pyplot as plt
 import scipy.optimize as optimize
 
 #Import custom
-import Basic, Background, Couplings, Graviton, KKcascade, Luminosity, PDFcalc, Smearing
-
+import v8.Basic as Basic
+import v8.Background as Background
+import v8.Couplings as Couplings
+import v8.Graviton as Graviton
+import v8.KKcascade as KKcascade
+import v8.Luminosity as Luminosity
+import v8.PDFcalc as PDFcalc
+import v8.Smearing as Smearing
 
 
 #Generate signal with no random fluctuations
@@ -107,7 +113,7 @@ def Bfix(massList):
   BGlist     = []
   listB      = []
 
-  with open('Background.txt') as f:
+  with open('v8/Background.txt') as f:
     for line in f:
       data = line.split()
       massBGlist.append(float(data[0]))

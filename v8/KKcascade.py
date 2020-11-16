@@ -10,7 +10,7 @@
 import math
 
 #Import custom
-import Basic
+import v8.Basic as Basic
 
 
 

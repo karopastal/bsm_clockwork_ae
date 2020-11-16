@@ -16,8 +16,9 @@ import matplotlib.mlab as mlab
 import matplotlib.pyplot as plt
 
 #Import custom
-import Merger, WT
-import SBLD as SB
+import v8.Merger as Merger
+import v8.WT as WT
+import v8.SBLD as SB
 
 print("Files imported.")
 print("")

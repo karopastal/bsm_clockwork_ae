@@ -11,7 +11,8 @@ import math, numpy, pywt
 from scipy import signal
 
 #Import custom
-import SBLD, WT
+import v8.SBLD as SBLD
+import v8.WT as WT
 
 
 #Function that generates many toy experiments and orders the results for each grid point

@@ -15,7 +15,7 @@
 import scipy.integrate
 
 #Import custom
-import PDFcalc
+import v8.PDFcalc as PDFcalc
 
 
 

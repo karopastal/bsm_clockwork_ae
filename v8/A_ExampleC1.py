@@ -125,7 +125,6 @@ print('Generation of training events completed.')
 print("")
 
 
-
 #Define model for autoencoder
 config = tf.ConfigProto()
 config.intra_op_parallelism_threads = NumberThreads

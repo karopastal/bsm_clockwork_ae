@@ -13,7 +13,7 @@ import math, numpy, pywt
 from scipy import signal
 
 #Import custom
-import Merger
+import v8.Merger as Merger
 
 
 

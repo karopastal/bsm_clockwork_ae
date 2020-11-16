@@ -11,8 +11,10 @@
 import math, numpy
 
 #Import custom
-import Basic, Couplings, KKcascade, Luminosity
-
+import v8.Basic as Basic
+import v8.Couplings as Couplings
+import v8.KKcascade as KKcascade
+import v8.Luminosity as Luminosity
 
 
 #Decay width of a graviton n
