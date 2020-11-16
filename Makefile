@@ -1,2 +1,2 @@
-dataset:
-	@pyenv exec python -m src.dataset
+cwt_generator:
+	@pyenv exec python -im src.cwt_generator
