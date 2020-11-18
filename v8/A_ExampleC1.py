@@ -133,7 +133,7 @@ sess = tf.Session(config=config)
 
 model1 = Sequential()
 
-#Add model layers
+# Add model layers
 model1.add(Conv2D(128, kernel_size=(3, 3), activation='elu', padding='same', input_shape=(dimWX[0], dimWX[1], 1)))
 model1.add(MaxPooling2D(pool_size=(2, 2)))
 model1.add(Conv2D(128, kernel_size=(3, 3), activation='elu', padding='same'))

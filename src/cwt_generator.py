@@ -10,6 +10,7 @@ import v8.SBLD as SB
 import v8.LSign as LSign
 
 BASEDIR = 'data/cwt_generator'
+PATH_SIGNALS_CATALOG = BASEDIR + '/signals_catalog'
 
 
 class CWTGenerator:
@@ -34,6 +35,11 @@ class CWTGenerator:
         self.n_cone_r = n_cone_r
         self.trials = trials
         self.binned_shape = binned_shape
+        self.fix_background = None
+        self.fix_signal = None
+        self.w_min_grid = None
+        self.w_max_grid = None
+        self.p_value_grid = None
 
     def _create_p_value_grid(self):
         toy_exp_grid, _ = LSign.ToyExperimentGridMaker(self.fix_background,
@@ -43,7 +49,7 @@ class CWTGenerator:
 
         return LSign.pvalueGridMaker(toy_exp_grid)
 
-    def _generate_random_binned_events(self):
+    def _generate_p_value_grid_from_background(self):
         self.mass_list = np.linspace(self.min_mass, self.max_mass, self.n_bins)
         self.fix_background = SB.Bfix(self.mass_list)
 
@@ -85,7 +91,7 @@ class CWTGenerator:
         return config
 
     def create(self, name):
-        self._generate_random_binned_events()
+        self._generate_p_value_grid_from_background()
         config = self._serialize_config()
         config['name'] = name
 
@@ -108,17 +114,51 @@ class CWTGenerator:
         for key, value in config.items():
             setattr(self, key, value)
 
+        infile.close()
         self.created = True
 
+    def mount_signal(self, m_5, k):
+        path = PATH_SIGNALS_CATALOG + '/m_5_%s__k_%s' % (m_5, k,)
+
+        if os.path.isfile(path):
+            infile = open(path, 'rb')
+            self.fix_signal = pickle.load(infile)
+            infile.close()
+        else:
+            self.fix_signal, _ = SB.Sfix(m_5, k, self.mass_list)
+
+            os.makedirs(PATH_SIGNALS_CATALOG, exist_ok=True)
+            outfile = open(path, 'wb')
+            pickle.dump(self.fix_signal, outfile)
+            outfile.close()
+
     def yield_background(self):
+        if not self.created:
+            return "Error: use .create(name='') or .load(path='')"
+
         events = SB.SBmain(self.fix_background,
                            self.fix_background,
                            aB=1,
                            aS=0)
 
-        wt_p_value = self._p_value_wavelet_transform(events)
+        cwt_p_value = self._p_value_wavelet_transform(events)
 
-        return wt_p_value[0:self.binned_shape[0], 0:self.binned_shape[1]]
+        return cwt_p_value[0:self.binned_shape[0], 0:self.binned_shape[1]]
+
+    def yield_background_signal(self):
+        if not self.created:
+            print("Error: use .create(name='') or .load(path='')")
+        if not self.fix_signal:
+            print("Error: use mount_signal(m_5={int}, k={int})")
+
+        events = SB.SBmain(self.fix_background,
+                           self.fix_signal,
+                           aB=1,
+                           aS=1)
+
+        cwt_p_value = self._p_value_wavelet_transform(events)
+
+        return cwt_p_value[0:self.binned_shape[0], 0:self.binned_shape[1]]
 
     def plot(self, wt_p_value):
         fig, ax = plt.subplots(figsize=(9, 7))
@@ -144,5 +184,9 @@ class CWTGenerator:
 
 
 # cwt_generator = CWTGenerator()
-# cwt_generator.load(path='')
-# cwt_generator.plot(cwt_generator.yield_background()_
+# cwt_generator.load(path='data/cwt_generator/type_1/11-16-20T12-36-42')
+#
+# cwt_generator.mount_signal(m_5=7000, k=750)
+# signal = cwt_generator.yield_background_signal()
+#
+# cwt_generator.plot(signal)
