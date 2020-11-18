@@ -31,7 +31,8 @@ def Sfix(M5, k, massList):
   Intlum = Couplings.Intlum
 
   #Load pdf information
-  pdf = mkPDF('MSTW2008lo68cl', 0, pdfdir=os.getcwd())
+  print(os.getcwd())
+  pdf = mkPDF('MSTW2008lo68cl', 0, pdfdir=os.getcwd() + '/v8')
 
   #Calculate masses of KK gravitons
   listMassKK = [0]
@@ -56,7 +57,7 @@ def Sfix(M5, k, massList):
   #Write properties
   if Couplings.writeProp:
 
-    ftemp = open("GravitonProperties.txt","w")
+    ftemp = open("GravitonProperties.txt", "w")
 
     ftemp.write("Summary of the graviton properties \n")
     ftemp.write("n     mass     Decay width     Cross section [fb]    BR to photons \n")
@@ -125,7 +126,6 @@ def Bfix(massList):
     listB.append(Background.BackgroundCal(massBGlist, BGlist, mass)/20*deltamass)
 
   return listB
-
 
 
 #Generate random fluctuations

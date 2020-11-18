@@ -176,7 +176,7 @@ for i in range(0, nTrials1):
  
   #Format for predictions
   cwtmatBTrial1Flat      = numpy.ravel(cwtmatBTrial1Norm)
-  cwtmatBTrial1Formatted = numpy.reshape(cwtmatBTrial1Flat,(1, X_train.shape[1], X_train.shape[2], 1))
+  cwtmatBTrial1Formatted = numpy.reshape(cwtmatBTrial1Flat, (1, X_train.shape[1], X_train.shape[2], 1))
     
   #Make prediction
   predTrial1 = model1.predict(cwtmatBTrial1Formatted)[0]
