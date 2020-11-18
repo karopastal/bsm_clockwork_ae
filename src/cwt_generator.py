@@ -22,7 +22,7 @@ class CWTGenerator:
                  merge_y=2,
                  cone=False,
                  n_cone_r=2,
-                 trials=200,
+                 trials=5000,
                  binned_shape=(60, 56)):
 
         self.created = False
