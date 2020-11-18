@@ -3,6 +3,7 @@ import logging
 import numpy as np
 
 from datetime import datetime
+from src.cwt_generator import CWTGenerator
 
 BASEDIR = 'data/dataset'
 
@@ -96,3 +97,24 @@ class Dataset:
         np.save(path_signal, dataset)
 
         logging.info('DONE: building test signal dataset')
+
+
+def main():
+    cwt_generator = CWTGenerator()
+    cwt_generator.create(name='default')
+
+    ds = Dataset(cwt_generator,
+                 train_size=35000,
+                 test_bg_size=10000,
+                 test_signal_size=10000)
+
+    ds.build_train_dataset()
+    ds.build_test_bg_dataset()
+    ds.build_test_signal_dataset(m_5=6000, k=1000)
+    ds.build_test_signal_dataset(m_5=6500, k=1000)
+    ds.build_test_signal_dataset(m_5=7000, k=1000)
+    ds.build_test_signal_dataset(m_5=7500, k=1000)
+
+
+if __name__ == '__main__':
+    main()

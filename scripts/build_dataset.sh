@@ -5,4 +5,4 @@
 export path_to_python="/bin/python3"
 export script_path="/gpfs0/kats/users/talpas/projects/bsm_clockwork_ae/scripts/build_dataset.py"
 
-qsub -cwd -q kats.q -S $path_to_python -m $script_path
+qsub -cwd -q kats.q -S $path_to_python $script_path
