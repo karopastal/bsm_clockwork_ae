@@ -62,6 +62,9 @@ class Dataset:
             record = self.cwt_generator.yield_background()
             arrays.append(record)
 
+            if i % 1500 == 0:
+                logging.info('STATUS: ' + str((i/self.train_size)*100))
+
         dataset = np.stack(arrays, axis=0)
         np.save(self.path_train, dataset)
 
@@ -75,6 +78,9 @@ class Dataset:
         for i in range(self.test_bg_size):
             record = self.cwt_generator.yield_background()
             arrays.append(record)
+
+            if i % 500 == 0:
+                logging.info('STATUS: ' + str((i/self.test_bg_size)*100))
 
         dataset = np.stack(arrays, axis=0)
         np.save(self.path_test_background, dataset)
@@ -93,6 +99,9 @@ class Dataset:
             record = self.cwt_generator.yield_background_signal()
             arrays.append(record)
 
+            if i % 500 == 0:
+                logging.info('STATUS: ' + str((i/self.test_signal_size)*100))
+
         dataset = np.stack(arrays, axis=0)
         np.save(path_signal, dataset)
 
@@ -104,9 +113,9 @@ def main():
     cwt_generator.create(name='default')
 
     ds = Dataset(cwt_generator,
-                 train_size=35000,
-                 test_bg_size=10000,
-                 test_signal_size=10000)
+                 train_size=25000,
+                 test_bg_size=5000,
+                 test_signal_size=5000)
 
     ds.build_train_dataset()
     ds.build_test_bg_dataset()
