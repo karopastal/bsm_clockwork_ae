@@ -6,7 +6,7 @@ import src.models.utils as model_utils
 from keras.layers import Input, Dense, Flatten, Reshape
 from keras.layers import Conv2D, MaxPooling2D, UpSampling2D
 from keras.models import Model, load_model, Sequential
-# from keras.optimizers import Adam
+from keras.optimizers import Adam
 from keras.callbacks import CSVLogger
 # from keras import regularizers
 
@@ -109,19 +109,19 @@ class ConvAE:
         norm_train_bg = model_utils.normalize(train_bg, factor)
         norm_test_bg = model_utils.normalize(test_bg, factor)
 
-        np.reshape(norm_train_bg,
-                   (norm_train_bg[0],
-                    norm_train_bg[1],
-                    norm_train_bg[2],
-                    1))
+        reshape_norm_train_bg = np.reshape(norm_train_bg, (
+                                           norm_train_bg.shape[0],
+                                           norm_train_bg.shape[1],
+                                           norm_train_bg.shape[2],
+                                           1))
 
-        np.reshape(norm_test_bg,
-                   (norm_test_bg[0],
-                    norm_test_bg[1],
-                    norm_test_bg[2],
-                    1))
+        reshape_norm_test_bg = np.reshape(norm_test_bg, (
+                                norm_test_bg.shape[0],
+                                norm_test_bg.shape[1],
+                                norm_test_bg.shape[2],
+                                1))
 
-        return norm_train_bg, norm_test_bg
+        return reshape_norm_train_bg, reshape_norm_test_bg
 
     def train_model(self, epochs=5, batch_size=64):
         train_bg, test_bg = self.load_train_data()
@@ -216,12 +216,48 @@ class ConvAE:
 
 
 def conv_ae_1():
-    return "lala 11"
+    path_dataset = 'data/dataset/11-18-20T23-18-18$25000'
+    optimizer = 'adam'
+    conv_ae = ConvAE(path_dataset=path_dataset,
+                     name='conv_ae_1',
+                     optimizer=optimizer)
+
+    conv_ae.train_model(epochs=200, batch_size=64)
 
 
 def conv_ae_2():
-    return "lala 22"
+    path_dataset = 'data/dataset/11-18-20T23-18-18$25000'
+    optimizer = 'adam'
+    conv_ae = ConvAE(path_dataset=path_dataset,
+                     name='conv_ae_2',
+                     optimizer=optimizer)
+
+    conv_ae.train_model(epochs=100, batch_size=64)
 
 
 def conv_ae_3():
-    return "lala 32"
+    path_dataset = 'data/dataset/11-18-20T23-18-18$25000'
+    optimizer = Adam(lr=0.0001)
+    conv_ae = ConvAE(path_dataset=path_dataset,
+                     name='conv_ae_3',
+                     optimizer=optimizer)
+
+    conv_ae.train_model(epochs=200, batch_size=64)
+
+
+def conv_ae_4():
+    path_dataset = 'data/dataset/11-18-20T23-18-18$25000'
+    optimizer = Adam(lr=0.0001)
+    conv_ae = ConvAE(path_dataset=path_dataset,
+                     name='conv_ae_4',
+                     optimizer=optimizer)
+
+    conv_ae.train_model(epochs=25, batch_size=64)
+
+
+# def main():
+#     conv_ae_1()
+#
+#
+# if __name__ == "__main__":
+#     main()
