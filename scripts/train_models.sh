@@ -13,6 +13,6 @@ for model in "${MODELS[@]}"
 do
   echo "Training model: $model"
   export MODEL_ARG="$model"
-  pyenv exec python -m src.models.train_models
-#  qsub -cwd -q kats.q -S $path_to_python $script_path
+#  pyenv exec python -m src.models.train_models
+  qsub -cwd -q kats.q -S $path_to_python $script_path
 done
