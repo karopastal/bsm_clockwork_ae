@@ -28,7 +28,7 @@ def main():
     init_logger()
 
     model = sys.argv[0]
-    logging.info(models[model]())
+    logging.info(model)
 
 
 if __name__ == "__main__":
