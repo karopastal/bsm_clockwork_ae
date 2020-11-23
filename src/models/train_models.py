@@ -1,4 +1,4 @@
-import os
+import sys
 import logging
 from src.models.conv_ae import conv_ae_1, conv_ae_2, conv_ae_3
 
@@ -27,8 +27,8 @@ models['conv_ae_3'] = conv_ae_3
 def main():
     init_logger()
 
-    model_arg = os.getenv('MODEL_ARG')
-    logging.info(models[model_arg]())
+    model = sys.argv[0]
+    logging.info(models[model]())
 
 
 if __name__ == "__main__":
