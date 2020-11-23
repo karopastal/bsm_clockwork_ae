@@ -27,7 +27,7 @@ models['conv_ae_3'] = conv_ae_3
 def main():
     init_logger()
 
-    model = sys.argv[1]
+    model = sys.argv
     logging.info(model)
 
 
