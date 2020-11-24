@@ -8,31 +8,6 @@ from keras.layers import Conv2D, MaxPooling2D, UpSampling2D
 from keras.models import Model, load_model, Sequential
 from keras.optimizers import Adam
 from keras.callbacks import CSVLogger
-# from keras import regularizers
-
-
-# def kl_divergence(rho, rho_hat):
-#     return rho * backend.log(rho) - \
-#            rho * backend.log(rho_hat) + \
-#            (1 - rho) * backend.log(1 - rho) - \
-#            (1 - rho) * backend.log(1 - rho_hat)
-
-
-# class SparsityRegularizer(regularizers.Regularizer):
-#
-#     def __init__(self, rho=0.1, beta=3):
-#         self.rho = rho
-#         self.beta = beta
-#
-#     def __call__(self, x):
-#         regularization = backend.constant(0., dtype=x.dtype)
-#         rho_hat = backend.mean(x, axis=0)
-#         regularization += self.beta * tf.math.reduce_sum(kl_divergence(self.rho, rho_hat))
-#
-#         return regularization
-#
-#     def get_config(self):
-#         return {'rho': float(self.rho), 'beta': float(self.beta)}
 
 
 class ConvAE:
@@ -51,14 +26,13 @@ class ConvAE:
         self.path_model = path_model
 
         if path_model != '':
+            self.path_dataset = path_dataset
             self.path_autoencoder = self.path_model + '/autoencoder.h5'
             self.path_summary = self.path_model + '/summary.txt'
             self.path_loss_progress = self.path_model + '/training.log'
 
+            self.shape = shape
             self.autoencoder_model = load_model(self.path_autoencoder)
-
-            # self.path_dataset = self.dataset_config['PATH_DATASET']
-            # self.shape = self.dataset_config['ORIGINAL_SHAPE']
 
         else:
             self.path_dataset = path_dataset
@@ -143,86 +117,102 @@ class ConvAE:
     def load_model(self):
         self.autoencoder_model = load_model(self.path_autoencoder)
 
-    # def load_test_data(self, signal_id=1):
-    #     test_bgs_data = model_utils.load_test_bgs_data(self.path_dataset)
-    #     test_signal_data = model_utils.load_test_signal_data(self.path_dataset, signal_id=signal_id)
-    #
-    #     factor = -1 * np.log(0.01)
-    #     norm_test_bgs_data = model_utils.normalize(test_bgs_data, factor)
-    #     norm_test_signal_data = model_utils.normalize(test_signal_data, factor)
-    #
-    #     return norm_test_bgs_data, norm_test_signal_data
+    def load_test_data(self, m_5=6000, k=1000):
+        test_bgs_data = model_utils.load_test_bg_data(self.path_dataset)
 
-    # def predict(self, x_test):
-    #     predictions = self.autoencoder_model.predict(x_test)
-    #
-    #     return predictions
-    #
-    # def eval_model(self, name, signal_id=1, file_name=''):
-    #     losses = {}
-    #     test_bgs_data, test_signal_data = self.load_test_data(signal_id=signal_id)
-    #
-    #     predict_bgs_test = self.predict(test_bgs_data)
-    #     predict_signal_test = self.predict(test_signal_data)
-    #
-    #     losses['test_bgs_data'] = test_bgs_data
-    #     losses['test_signal_data'] = test_signal_data
-    #     losses['predict_bgs_test'] = predict_bgs_test.reshape(losses['test_bgs_data'].shape)
-    #     losses['predict_signal_test'] = predict_signal_test.reshape(losses['test_signal_data'].shape)
-    #
-    #     model_utils.print_predictions_loss(losses=losses)
-    #
-    #     title = '%s Background' % (name,)
-    #     model_utils.plot_prediction(self.autoencoder_model,
-    #                                 test_bgs_data[0:3],
-    #                                 self.shape,
-    #                                 title,
-    #                                 file_name=[file_name, '_bg'])
-    #
-    #     title = '%s Background + Signal' % (name,)
-    #     model_utils.plot_prediction(self.autoencoder_model,
-    #                                 test_signal_data[0:3],
-    #                                 self.shape,
-    #                                 title,
-    #                                 file_name=[file_name, '_bg_signal'])
-    #
-    # def create_loss_distribution(self, name, signal_id=1, file_name=''):
-    #     test_bgs_data, test_signal_data = self.load_test_data(signal_id=signal_id)
-    #
-    #     predict_bgs_test = self.predict(test_bgs_data)
-    #     predict_signal_test = self.predict(test_signal_data)
-    #
-    #     test_bgs_distribution = model_utils.loss_distribution(test_bgs_data,
-    #                                                           predict_bgs_test.reshape(test_bgs_data.shape))
-    #
-    #     test_signal_distribution = model_utils.loss_distribution(test_signal_data,
-    #                                                              predict_signal_test.reshape(test_signal_data.shape))
-    #     model_utils.plot_histogram(test_bgs_distribution.numpy(),
-    #                                test_signal_distribution.numpy(),
-    #                                name,
-    #                                file_name=file_name)
+        test_signal_data = model_utils.load_test_signal_data(self.path_dataset,
+                                                             m_5=m_5,
+                                                             k=k)
+
+        factor = -1 * np.log(0.01)
+        norm_test_bgs_data = model_utils.normalize(test_bgs_data, factor)
+        norm_test_signal_data = model_utils.normalize(test_signal_data, factor)
+
+        reshape_norm_test_bg = np.reshape(norm_test_bgs_data, (
+                                norm_test_bgs_data.shape[0],
+                                norm_test_bgs_data.shape[1],
+                                norm_test_bgs_data.shape[2],
+                                1))
+
+        reshape_norm_train_bg = np.reshape(norm_test_signal_data, (
+                                           norm_test_signal_data.shape[0],
+                                           norm_test_signal_data.shape[1],
+                                           norm_test_signal_data.shape[2],
+                                           1))
+
+        return reshape_norm_test_bg, reshape_norm_train_bg
+
+    def predict(self, x_test):
+        predictions = self.autoencoder_model.predict(x_test)
+
+        return predictions
+
+    def eval_model(self, name, m_5=6000, k=1000, file_name=''):
+        losses = {}
+
+        test_bgs_data, test_signal_data = self.load_test_data(m_5=m_5, k=k)
+
+        predict_bgs_test = self.predict(test_bgs_data)
+        predict_signal_test = self.predict(test_signal_data)
+
+        losses['test_bgs_data'] = test_bgs_data
+        losses['test_signal_data'] = test_signal_data
+        losses['predict_bgs_test'] = predict_bgs_test.reshape(losses['test_bgs_data'].shape)
+        losses['predict_signal_test'] = predict_signal_test.reshape(losses['test_signal_data'].shape)
+
+        model_utils.print_predictions_loss(losses=losses)
+
+        # title = '%s Background' % (name,)
+        # model_utils.plot_prediction(self.autoencoder_model,
+        #                             test_bgs_data[0:3],
+        #                             self.shape,
+        #                             title,
+        #                             file_name=[file_name, '_bg'])
+        #
+        # title = '%s Background + Signal' % (name,)
+        # model_utils.plot_prediction(self.autoencoder_model,
+        #                             test_signal_data[0:3],
+        #                             self.shape,
+        #                             title,
+        #                             file_name=[file_name, '_bg_signal'])
+
+    def create_loss_distribution(self, name, m_5=6000, k=1000, file_name=''):
+        test_bgs_data, test_signal_data = self.load_test_data(m_5=m_5, k=k)
+
+        predict_bgs_test = self.predict(test_bgs_data)
+        predict_signal_test = self.predict(test_signal_data)
+
+        test_bgs_distribution = model_utils.loss_distribution(test_bgs_data,
+                                                              predict_bgs_test.reshape(test_bgs_data.shape))
+
+        test_signal_distribution = model_utils.loss_distribution(test_signal_data,
+                                                                 predict_signal_test.reshape(test_signal_data.shape))
+        model_utils.plot_histogram(test_bgs_distribution.numpy(),
+                                   test_signal_distribution.numpy(),
+                                   name,
+                                   file_name=file_name)
 
     def summary(self):
         return self.autoencoder_model.summary()
 
-    # def plot_progress(self, title='', file_name=''):
-    #     if self.path_model != '':
-    #         model_utils.plot_progress(self.path_loss_progress, title=title, file_name=file_name)
-    #     else:
-    #         print('error, load model first')
+    def plot_progress(self, title='', file_name=''):
+        if self.path_model != '':
+            model_utils.plot_progress(self.path_loss_progress, title=title, file_name=file_name)
+        else:
+            print('error, load model first')
 
 
 """ Versions """
 
 
-def conv_ae_1():
-    path_dataset = 'data/dataset/11-18-20T23-18-18$25000'
-    optimizer = 'adam'
-    conv_ae = ConvAE(path_dataset=path_dataset,
-                     name='conv_ae_1',
-                     optimizer=optimizer)
-
-    conv_ae.train_model(epochs=200, batch_size=64)
+# def conv_ae_1():
+#     path_dataset = 'data/dataset/11-18-20T23-18-18$25000'
+#     optimizer = 'adam'
+#     conv_ae = ConvAE(path_dataset=path_dataset,
+#                      name='conv_ae_1',
+#                      optimizer=optimizer)
+#
+#     conv_ae.train_model(epochs=200, batch_size=64)
 
 
 def conv_ae_2():
@@ -245,19 +235,21 @@ def conv_ae_3():
     conv_ae.train_model(epochs=200, batch_size=64)
 
 
-def conv_ae_4():
+def conv_ae_5():
     path_dataset = 'data/dataset/11-18-20T23-18-18$25000'
-    optimizer = Adam(lr=0.0001)
+    optimizer = 'adam'
     conv_ae = ConvAE(path_dataset=path_dataset,
-                     name='conv_ae_4',
+                     name='conv_ae_5',
                      optimizer=optimizer)
 
-    conv_ae.train_model(epochs=25, batch_size=64)
+    conv_ae.train_model(epochs=500, batch_size=1000)
 
+# def conv_ae_4():
+#     path_dataset = 'data/dataset/11-18-20T23-18-18$25000'
+#     optimizer = Adam(lr=0.0001)
+#     conv_ae = ConvAE(path_dataset=path_dataset,
+#                      name='conv_ae_4',
+#                      optimizer=optimizer)
+#
+#     conv_ae.train_model(epochs=25, batch_size=64)
 
-# def main():
-#     conv_ae_1()
-#
-#
-# if __name__ == "__main__":
-#     main()

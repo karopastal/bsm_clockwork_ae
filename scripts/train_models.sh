@@ -5,9 +5,10 @@
 export path_to_python="/bin/python3"
 export script_path="/gpfs0/kats/users/talpas/projects/bsm_clockwork_ae/scripts/train_models.py"
 
-#MODELS=('conv_ae_1'
-#        'conv_ae_2'
-#        'conv_ae_3')
+MODELS=('conv_ae_1'
+        'conv_ae_2'
+        'conv_ae_3',
+        'jdshfls')
 
 MODELS=('conv_ae_4')
 

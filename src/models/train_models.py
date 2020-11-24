@@ -1,5 +1,6 @@
 import sys
 import logging
+
 from src.models.conv_ae import conv_ae_1,\
                                conv_ae_2,\
                                conv_ae_3,\
@@ -22,10 +23,10 @@ models = dict()
 
 """ conv ae """
 
-models['conv_ae_1'] = conv_ae_1
-models['conv_ae_2'] = conv_ae_2
-models['conv_ae_3'] = conv_ae_3
-models['conv_ae_4'] = conv_ae_4
+# models['conv_ae_1'] = conv_ae_1
+# models['conv_ae_2'] = conv_ae_2
+# models['conv_ae_3'] = conv_ae_3
+# models['conv_ae_4'] = conv_ae_4
 
 
 def job_status():
@@ -40,7 +41,7 @@ def main():
 
     model_arg = sys.argv[1]
     models[model_arg]()
-    logging.info(models[model_arg]())
+    # logging.info()
 
 
 if __name__ == "__main__":
