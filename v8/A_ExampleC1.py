@@ -155,7 +155,7 @@ model1.add(Conv2D(1, kernel_size=(3, 3), activation='elu', padding='same'))
 model1.compile(optimizer='adam',loss='mean_squared_error')
 
 #Checkpoint
-checkpoint = keras.callbacks.ModelCheckpoint(nameModelFile, verbose=1, monitor='val_loss',save_best_only=True, mode='auto')
+checkpoint = keras.callbacks.ModelCheckpoint(nameModelFile, verbose=1, monitor='val_loss', save_best_only=True, mode='auto')
 
 #Train model
 train_history = model1.fit(X_train, Y_train, batch_size=200, epochs=NumberEpochs, validation_split=0.2, callbacks=[checkpoint])
