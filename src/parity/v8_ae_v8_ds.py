@@ -109,16 +109,10 @@ Y_train = numpy.reshape(Y_train, (nTraining, dimWX[0], dimWX[1], 1))
 
 PATH_V8_DATASET = 'data/dataset/v8'
 os.makedirs(PATH_V8_DATASET, exist_ok=True)
-numpy.save(PATH_V8_DATASET + '/training.npy', X_train)
+numpy.save(PATH_V8_DATASET + '/test_background.npy', X_train)
 
 print('Generation of training events completed.')
 print("")
-
-# Define model for autoencoder
-config = tf.ConfigProto()
-config.intra_op_parallelism_threads = NumberThreads
-config.inter_op_parallelism_threads = NumberThreads
-sess = tf.Session(config=config)
 
 model1 = Sequential()
 
@@ -151,7 +145,7 @@ checkpoint = keras.callbacks.ModelCheckpoint(nameModelFile, verbose=1, monitor='
 train_history = model1.fit(X_train, Y_train, batch_size=200, epochs=NumberEpochs, validation_split=0.2,
                            callbacks=[checkpoint])
 
-PATH_V8_MODEL = 'data/models/v8'
+PATH_V8_MODEL = 'data/models/v8_ae_v8_ds'
 
 os.makedirs(PATH_V8_MODEL, exist_ok=True)
 model1.save(PATH_V8_MODEL + "/autoencoder.h5")
