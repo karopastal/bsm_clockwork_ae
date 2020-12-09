@@ -107,9 +107,9 @@ Y_train = numpy.ravel(Y_train)
 X_train = numpy.reshape(X_train, (nTraining, dimWX[0], dimWX[1], 1))
 Y_train = numpy.reshape(Y_train, (nTraining, dimWX[0], dimWX[1], 1))
 
-PATH_V8_DATASET = 'data/dataset/v8/training.npy'
-
-numpy.save(PATH_V8_DATASET, X_train)
+PATH_V8_DATASET = 'data/dataset/v8'
+os.makedirs(PATH_V8_DATASET, exist_ok=True)
+numpy.save(PATH_V8_DATASET + '/training.npy', X_train)
 
 print('Generation of training events completed.')
 print("")
