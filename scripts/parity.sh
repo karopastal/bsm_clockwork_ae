@@ -7,11 +7,7 @@ export script_path="/gpfs0/kats/users/talpas/projects/bsm_clockwork_ae/scripts/t
 
 COMMANDS=('src.parity.v8_ae_v8_ds'         # non normalized
           'src.parity.v8_ae_v8_ds_nor'
-          'src.parity.v8_ae_parity_ds'     # non normalized
-          'src.parity.v8_ae_parity_ds_nor'
-          'src.parity.parity_ae_parity_ds' # non normalized
-          'src.parity.parity_ae_v8_ds')    # non normalized
-
+          'src.parity.parity_ae_v8_ds')    # normalized
 
 
 #COMMANDS=('src.parity.parity_ae_v8_ds')    # normalized

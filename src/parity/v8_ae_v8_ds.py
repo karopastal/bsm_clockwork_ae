@@ -111,8 +111,9 @@ NumberEpochs = 100
 # os.makedirs(PATH_V8_DATASET, exist_ok=True)
 # numpy.save(PATH_V8_DATASET + '/test_background.npy', X_train)
 
-PATH_V8_DS = 'data/dataset/v8'
-X_train = numpy.load(PATH_V8_DS + 'train_background.npy')
+PATH_V8_DS = 'data/dataset/v8/train_background.npy'
+
+X_train = numpy.load(PATH_V8_DS)
 Y_train = numpy.copy(X_train)
 
 dimWX = (X_train.shape[1], X_train.shape[2])
