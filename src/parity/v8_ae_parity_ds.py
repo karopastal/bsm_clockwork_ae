@@ -91,7 +91,7 @@ checkpoint = keras.callbacks.ModelCheckpoint(nameModelFile,
 # Train model
 train_history = model1.fit(X_train,
                            Y_train,
-                           batch_size=200,
+                           batch_size=1000,
                            epochs=NumberEpochs,
                            validation_split=0.2,
                            callbacks=[checkpoint])

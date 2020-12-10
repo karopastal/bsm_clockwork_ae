@@ -79,9 +79,12 @@ class ConvAE:
         train_bg = model_utils.load_train_bg_data(self.path_dataset)
         test_bg = model_utils.load_test_bg_data(self.path_dataset)
 
-        factor = -1 * np.log(0.01)
-        norm_train_bg = model_utils.normalize(train_bg, factor)
-        norm_test_bg = model_utils.normalize(test_bg, factor)
+        # factor = -1 * np.log(0.01)
+        # norm_train_bg = model_utils.normalize(train_bg, factor)
+        # norm_test_bg = model_utils.normalize(test_bg, factor)
+
+        norm_train_bg = train_bg
+        norm_test_bg = test_bg
 
         reshape_norm_train_bg = np.reshape(norm_train_bg, (
                                            norm_train_bg.shape[0],

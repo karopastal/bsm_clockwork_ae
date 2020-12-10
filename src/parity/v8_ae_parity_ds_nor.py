@@ -1,5 +1,5 @@
 import math, numpy, scipy, random, os, sys
-
+import shutil
 import v8.LSign as LSign
 import v8.WT as WT
 import v8.SBLD as SB
@@ -44,79 +44,16 @@ NumberThreads = 8
 # Number of epochs to train
 NumberEpochs = 100
 
-# print("Setting read")
-# print("")
-#
-# # Mass and scale Lists
-# massList = numpy.linspace(minMass, maxMass, nBins)
-#
-# # Generate fix background
-# BFix = SB.Bfix(massList)
-# print("Background evaluated.")
-# print("")
-#
-# # Grid of toy experiments
-# print("Generating average map...")
-# print("")
-#
-# toyExpGrid1, _ = LSign.ToyExperimentGridMaker(BFix, mergeX, mergeY, nTrials)
-# wMinGrid, wMaxGrid, pvalueGrid = LSign.pvalueGridMaker(toyExpGrid1)
-#
-# # Training neural network
-# print("Beginning generation of training events...")
-# print("")
-#
-# # Generate events for training and testing
-# X_train = []
-# Y_train = []
-#
-# for i in range(0, nTraining):
-#
-#     # Generate random binned events
-#     eventsInt = SB.SBmain(BFix, BFix, 1, 0)
-#
-#     # Do wavelet transform
-#     cwtmatBSIntNorm, _, _ = WT.WaveletTransform(eventsInt, mergeX, mergeY, Cone, NconeR)
-#     cwtmatBSIntNormdAv = -numpy.log(LSign.pvalueCalc(wMinGrid, wMaxGrid, pvalueGrid, cwtmatBSIntNorm))
-#
-#     # Reshape matrix
-#     sizeX = 60
-#     sizeY = 56
-#     cwtmatBSIntNorm = cwtmatBSIntNormdAv[0:sizeX, 0:sizeY]
-#
-#     # Append results
-#     X_train.append(cwtmatBSIntNorm)
-#     Y_train.append(cwtmatBSIntNorm)
-#
-#     # Make report
-#     if i % 100 == 0:
-#         print(i)
-#
-# # Convert to numpy array
-# X_train = numpy.array(X_train)
-# Y_train = numpy.array(Y_train)
-#
-# # Dimension info
-# dimWX = (X_train.shape[1], X_train.shape[2])
-# dimWY = (Y_train.shape[1], Y_train.shape[2])
-#
-# # Format
-# X_train = numpy.ravel(X_train)
-# Y_train = numpy.ravel(Y_train)
-#
-# X_train = numpy.reshape(X_train, (nTraining, dimWX[0], dimWX[1], 1))
-# Y_train = numpy.reshape(Y_train, (nTraining, dimWX[0], dimWX[1], 1))
 
-# PATH_V8_DATASET = 'data/dataset/v8'
-# os.makedirs(PATH_V8_DATASET, exist_ok=True)
-# numpy.save(PATH_V8_DATASET + '/test_background.npy', X_train)
+PATH_PARITY_DATASET = 'data/dataset/12-09-20T17-23-10$5000/train_background.npy'
+X_train = numpy.load(PATH_PARITY_DATASET)
 
-PATH_V8_DS = 'data/dataset/v8'
-X_train = numpy.load(PATH_V8_DS + 'train_background.npy')
+X_shape = X_train.shape
+dimWX = (X_shape[1], X_shape[2])
+dimWY = (X_shape[1], X_shape[2])
+
+X_train = numpy.reshape(X_train, (nTraining, dimWX[0], dimWX[1], 1)) / -numpy.log(0.01)
 Y_train = numpy.copy(X_train)
-
-dimWX = (X_train.shape[1], X_train.shape[2])
-dimWY = (Y_train.shape[1], Y_train.shape[2])
 
 print('Generation of training events completed.')
 print("")
@@ -159,7 +96,7 @@ train_history = model1.fit(X_train,
                            validation_split=0.2,
                            callbacks=[checkpoint])
 
-PATH_V8_MODEL = 'data/models/v8_ae_v8_ds'
+PATH_V8_MODEL = 'data/models/v8_ae_parity_ds'
 
 os.makedirs(PATH_V8_MODEL, exist_ok=True)
 model1.save(PATH_V8_MODEL + "/autoencoder.h5")

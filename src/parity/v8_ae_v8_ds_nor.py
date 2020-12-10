@@ -112,7 +112,7 @@ NumberEpochs = 100
 # numpy.save(PATH_V8_DATASET + '/test_background.npy', X_train)
 
 PATH_V8_DS = 'data/dataset/v8'
-X_train = numpy.load(PATH_V8_DS + 'train_background.npy')
+X_train = numpy.load(PATH_V8_DS + 'train_background.npy') / -numpy.log(0.01)
 Y_train = numpy.copy(X_train)
 
 dimWX = (X_train.shape[1], X_train.shape[2])
@@ -145,10 +145,7 @@ model1.add(Conv2D(1, kernel_size=(3, 3), activation='elu', padding='same'))
 model1.compile(optimizer='adam', loss='mean_squared_error')
 
 # Checkpoint
-checkpoint = keras.callbacks.ModelCheckpoint(nameModelFile,
-                                             verbose=1,
-                                             monitor='val_loss',
-                                             save_best_only=True,
+checkpoint = keras.callbacks.ModelCheckpoint(nameModelFile, verbose=1, monitor='val_loss', save_best_only=True,
                                              mode='auto')
 
 # Train model
@@ -159,7 +156,7 @@ train_history = model1.fit(X_train,
                            validation_split=0.2,
                            callbacks=[checkpoint])
 
-PATH_V8_MODEL = 'data/models/v8_ae_v8_ds'
+PATH_V8_MODEL = 'data/models/v8_ae_v8_ds_nor'
 
 os.makedirs(PATH_V8_MODEL, exist_ok=True)
 model1.save(PATH_V8_MODEL + "/autoencoder.h5")
