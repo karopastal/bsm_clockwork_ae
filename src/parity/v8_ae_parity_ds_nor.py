@@ -96,7 +96,7 @@ train_history = model1.fit(X_train,
                            validation_split=0.2,
                            callbacks=[checkpoint])
 
-PATH_V8_MODEL = 'data/models/v8_ae_parity_ds'
+PATH_V8_MODEL = 'data/models/v8_ae_parity_ds_nor'
 
 os.makedirs(PATH_V8_MODEL, exist_ok=True)
 model1.save(PATH_V8_MODEL + "/autoencoder.h5")

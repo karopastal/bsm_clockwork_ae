@@ -5,12 +5,17 @@
 export path_to_python="/bin/python3"
 export script_path="/gpfs0/kats/users/talpas/projects/bsm_clockwork_ae/scripts/train_models.py"
 
-COMMANDS=('src.parity.v8_ae_v8_ds'
+COMMANDS=('src.parity.v8_ae_v8_ds'         # non normalized
           'src.parity.v8_ae_v8_ds_nor'
-          'src.parity.parity_ae_parity_ds'
-          'src.parity.v8_ae_parity_ds')
+          'src.parity.v8_ae_parity_ds'     # non normalized
+          'src.parity.v8_ae_parity_ds_nor'
+          'src.parity.parity_ae_parity_ds' # non normalized
+          'src.parity.parity_ae_v8_ds')    # non normalized
 
-#COMMANDS = ('src.parity.v8_ae_parity_ds' 'src.parity.parity_ae_v8_ds')
+
+
+#COMMANDS=('src.parity.parity_ae_v8_ds')    # normalized
+
 
 for command in "${COMMANDS[@]}"
 do
