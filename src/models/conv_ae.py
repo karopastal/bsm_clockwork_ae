@@ -128,6 +128,8 @@ class ConvAE:
                                                              k=k)
 
         factor = -1 * np.log(0.01)
+        #
+        # factor = 1
         norm_test_bgs_data = model_utils.normalize(test_bgs_data, factor)
         norm_test_signal_data = model_utils.normalize(test_signal_data, factor)
 
