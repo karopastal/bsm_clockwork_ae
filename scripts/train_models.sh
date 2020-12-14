@@ -5,12 +5,18 @@
 export path_to_python="/bin/python3"
 export script_path="/gpfs0/kats/users/talpas/projects/bsm_clockwork_ae/scripts/train_models.py"
 
-MODELS=('conv_kl_ae_1'
-        'conv_kl_ae_2'
-        'conv_kl_ae_3'
-        'conv_kl_ae_4'
-        'conv_kl_ae_5'
-        'conv_kl_ae_6')
+MODELS=('conv_kl_ae_v1_1'
+        'conv_kl_ae_v1_2'
+        'conv_kl_ae_v1_3'
+        'conv_kl_ae_v1_4'
+        'conv_kl_ae_v1_5'
+        'conv_kl_ae_v1_6'
+        'conv_kl_ae_v2_1'
+        'conv_kl_ae_v2_2'
+        'conv_kl_ae_v2_3'
+        'conv_kl_ae_v2_4'
+        'conv_kl_ae_v2_5'
+        'conv_kl_ae_v2_6')
 
 
 for model in "${MODELS[@]}"
