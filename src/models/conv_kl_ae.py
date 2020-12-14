@@ -360,6 +360,3 @@ def conv_kl_ae_6():
                        optimizer=optimizer)
 
     conv_ae.train_model(epochs=100, batch_size=64)
-
-
-conv_kl_ae_1()
