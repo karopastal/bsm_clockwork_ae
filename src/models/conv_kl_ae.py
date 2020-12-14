@@ -103,7 +103,7 @@ class ConvKLAE:
 
         model.add(Conv2D(128,
                          kernel_size=(3, 3),
-                         activation='elu',
+                         activation='relu',
                          padding='same',
                          input_shape=(self.shape[0], self.shape[1], 1)))
 
@@ -113,7 +113,7 @@ class ConvKLAE:
         model.add(Conv2D(128, kernel_size=(3, 3), activation='elu', padding='same'))
 
         model.add(Flatten())
-        model.add(Dense(40, activation='elu'))
+        model.add(Dense(40, activation='relu'))
 
         """ Encoded layer """
         model.add(Dense(20,
@@ -121,7 +121,7 @@ class ConvKLAE:
                         activity_regularizer=SparsityRegularizer(self.rho,
                                                                  self.beta)))
 
-        model.add(Dense(40, activation='elu'))
+        model.add(Dense(40, activation='relu'))
         model.add(Dense(int(np.prod(self.shape) / 16 * 128), activation='elu'))
         model.add(Reshape((int(self.shape[0] / 4), int(self.shape[1] / 4), 128)))
 
