@@ -1,10 +1,17 @@
 import sys
 import logging
 
-from src.models.conv_ae import conv_ae_1,\
-                               conv_ae_2,\
-                               conv_ae_3,\
-                               conv_ae_4
+# from src.models.conv_ae import conv_ae_1,\
+#                                conv_ae_2,\
+#                                conv_ae_3,\
+#                                conv_ae_4
+
+from src.models.conv_kl_ae import conv_kl_ae_1, \
+                                  conv_kl_ae_2, \
+                                  conv_kl_ae_3, \
+                                  conv_kl_ae_4, \
+                                  conv_kl_ae_5, \
+                                  conv_kl_ae_6
 
 
 def init_logger():
@@ -27,6 +34,13 @@ models = dict()
 # models['conv_ae_2'] = conv_ae_2
 # models['conv_ae_3'] = conv_ae_3
 # models['conv_ae_4'] = conv_ae_4
+
+models['conv_kl_ae_1'] = conv_kl_ae_1
+models['conv_kl_ae_2'] = conv_kl_ae_2
+models['conv_kl_ae_3'] = conv_kl_ae_3
+models['conv_kl_ae_4'] = conv_kl_ae_4
+models['conv_kl_ae_5'] = conv_kl_ae_5
+models['conv_kl_ae_6'] = conv_kl_ae_6
 
 
 def job_status():
