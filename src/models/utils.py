@@ -174,6 +174,7 @@ def plot_histogram(bgs, signal, base_dir='', file_name=''):
     plt.legend(loc='upper right', fontsize=18)
 
     path = base_dir + '/' + file_name + '_loss_dist.jpeg'
+
     plt.savefig(path)
     # plt.show()
     plt.close('all')

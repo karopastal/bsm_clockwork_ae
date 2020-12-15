@@ -22,6 +22,7 @@ def eval_model(model, file_name='', base_dir='', title=''):
 
     model.create_loss_distribution(m_5=6200,
                                    k=1000,
+                                   base_dir=base_dir,
                                    file_name=file_name)
 
 
@@ -29,7 +30,10 @@ def main():
 
     model_path = sys.argv[1]
     config_path = model_path + '/config.json'
-    config = json.loads(config_path)
+
+    with open(config_path) as f:
+        config = json.load(f)
+
     model_type = config['base_dir'].split("/")[-3]
     model_name = config['base_dir'].split("/")[-2]
 

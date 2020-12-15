@@ -62,9 +62,6 @@ class ConvKLAE:
 
             self.autoencoder_model = load_model(self.path_autoencoder,
                                                 custom_objects=custom_objects)
-
-            self.autoencoder_model = load_model(self.path_autoencoder)
-
         else:
             self.path_dataset = path_dataset
             self.base_dir = model_utils.get_ae_base_dir(self.ae_type, self.name)
