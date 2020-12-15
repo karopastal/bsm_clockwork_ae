@@ -29,7 +29,7 @@ def main():
 
     model_path = sys.argv[1]
     config_path = model_path + '/config.json'
-    config = json.load(config_path)
+    config = json.loads(config_path)
     model_type = config['base_dir'].split("/")[-3]
     model_name = config['base_dir'].split("/")[-2]
 
