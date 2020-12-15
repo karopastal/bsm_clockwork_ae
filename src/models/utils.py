@@ -57,8 +57,8 @@ def print_predictions_loss(losses):
     print("--------------------------------------")
 
 
-def plot_progress(path_progress, title='', file_name=''):
-    # path = 'docs/output/' + file_name + '_model_loss.jpeg'
+def plot_progress(path_progress, base_dir='', title='', file_name=''):
+    path = base_dir + '/' + file_name + '_model_loss.jpeg'
 
     progress = np.loadtxt(open(path_progress, "rb"), delimiter=",", skiprows=1)
 
@@ -76,8 +76,8 @@ def plot_progress(path_progress, title='', file_name=''):
     plt.xticks(fontsize=18)
     plt.yticks(fontsize=18)
     plt.legend(['train', 'validation'], loc='upper right', fontsize=18)
-    # plt.savefig(path)
-    plt.show()
+    plt.savefig(path)
+    # plt.show()
     plt.close('all')
 
 
@@ -156,7 +156,7 @@ def plot_prediction(autoencoder, x_test, shape, title, file_name):
     plt.close('all')
 
 
-def plot_histogram(bgs, signal, name, file_name=''):
+def plot_histogram(bgs, signal, base_dir='', file_name=''):
     # the histogram of the data
     p_value = model_efficiency_p_value(bgs, signal)
 
@@ -169,11 +169,11 @@ def plot_histogram(bgs, signal, name, file_name=''):
     plt.ylabel('Count', fontsize=18)
     plt.xticks(fontsize=18)
     plt.yticks(fontsize=18)
-    plt.title('%s loss distribution, efficiency_p_value: %s' % (name, p_value, ), fontsize=20)
+    plt.title('%s loss distribution, efficiency_p_value: %s' % (file_name, p_value, ), fontsize=20)
     plt.grid(True)
     plt.legend(loc='upper right', fontsize=18)
 
-    path = 'docs/output/' + file_name + '_loss_dist.jpeg'
-    # plt.savefig(path)
-    plt.show()
+    path = base_dir + '/' + file_name + '_loss_dist.jpeg'
+    plt.savefig(path)
+    # plt.show()
     plt.close('all')
