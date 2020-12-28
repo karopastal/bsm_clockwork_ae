@@ -108,9 +108,9 @@ class ConvKLAE:
                          input_shape=(self.shape[0], self.shape[1], 1)))
 
         model.add(MaxPooling2D(pool_size=(2, 2)))
-        model.add(Conv2D(128, kernel_size=(3, 3), activation='elu', padding='same'))
+        model.add(Conv2D(128, kernel_size=(3, 3), activation='relu', padding='same'))
         model.add(MaxPooling2D(pool_size=(2, 2)))
-        model.add(Conv2D(128, kernel_size=(3, 3), activation='elu', padding='same'))
+        model.add(Conv2D(128, kernel_size=(3, 3), activation='relu', padding='same'))
 
         model.add(Flatten())
         model.add(Dense(40, activation='relu'))

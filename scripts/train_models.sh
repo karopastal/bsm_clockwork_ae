@@ -7,10 +7,11 @@
 export path_to_python="/bin/python3"
 export script_path="/gpfs0/kats/users/talpas/projects/bsm_clockwork_ae/scripts/train_models.py"
 
-MODELS=('conv_ae_2'
-        'conv_kl_ae_v2_3'
-        'conv_kl_ae_v2_7'
-        'conv_kl_ae_4')
+MODELS=('conv_kl_ae_v2_7'
+        'conv_kl_ae_4'
+#        'conv_ae_2'
+#        'conv_kl_ae_v2_3'
+        )
 
 
 for model in "${MODELS[@]}"

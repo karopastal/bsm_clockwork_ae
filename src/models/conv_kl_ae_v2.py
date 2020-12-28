@@ -309,7 +309,7 @@ def conv_kl_ae_v2_7():
     optimizer = 'adam'
 
     conv_ae = ConvKLAEV2(path_dataset=DS_25K,
-                         name='conv_kl_ae_v2_3',
+                         name='conv_kl_ae_v2_7',
                          rho=rho,
                          beta=beta,
                          optimizer=optimizer)
