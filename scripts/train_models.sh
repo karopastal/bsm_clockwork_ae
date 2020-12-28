@@ -15,5 +15,5 @@ for model in "${MODELS[@]}"
 do
   echo "Training model: $model"
   export script_path="/gpfs0/kats/users/talpas/projects/bsm_clockwork_ae/scripts/train_models.py $model"
-  qsub -cwd -q kats.q -l mem_free=50G,h_vmem=50G -pe shared 10 -S $path_to_python $script_path
+  qsub -cwd -q kats.q -l mem_free=50G,h_vmem=50G -S $path_to_python $script_path
 done
