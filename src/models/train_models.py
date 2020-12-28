@@ -3,7 +3,7 @@ import logging
 
 from src.models.conv_ae import conv_ae_2
 from src.models.conv_kl_ae import conv_kl_ae_4
-from src.models.conv_kl_ae_v2 import conv_kl_ae_v2_3
+from src.models.conv_kl_ae_v2 import conv_kl_ae_v2_3, conv_kl_ae_v2_7
 
 
 def init_logger():
@@ -20,11 +20,10 @@ def init_logger():
 
 models = dict()
 
-""" conv ae """
-
 models['conv_ae_2'] = conv_ae_2
 models['conv_kl_ae_4'] = conv_kl_ae_4
 models['conv_kl_ae_v2_3'] = conv_kl_ae_v2_3
+models['conv_kl_ae_v2_7'] = conv_kl_ae_v2_7
 
 
 def main():

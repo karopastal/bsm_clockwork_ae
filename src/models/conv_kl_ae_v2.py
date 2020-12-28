@@ -300,7 +300,21 @@ def conv_kl_ae_v2_3():
                          beta=beta,
                          optimizer=optimizer)
 
-    conv_ae.train_model(epochs=2, batch_size=64)
+    conv_ae.train_model(epochs=200, batch_size=64)
+
+
+def conv_kl_ae_v2_7():
+    rho = 0.01
+    beta = 3
+    optimizer = 'adam'
+
+    conv_ae = ConvKLAEV2(path_dataset=DS_25K,
+                         name='conv_kl_ae_v2_3',
+                         rho=rho,
+                         beta=beta,
+                         optimizer=optimizer)
+
+    conv_ae.train_model(epochs=200, batch_size=64)
 
 
 # def conv_kl_ae_v2_1():

@@ -9,6 +9,7 @@ export script_path="/gpfs0/kats/users/talpas/projects/bsm_clockwork_ae/scripts/t
 
 MODELS=('conv_ae_2'
         'conv_kl_ae_v2_3'
+        'conv_kl_ae_v2_7'
         'conv_kl_ae_4')
 
 

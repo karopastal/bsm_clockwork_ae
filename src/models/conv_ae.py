@@ -221,16 +221,16 @@ class ConvAE:
 
 
 """ Versions """
+DS_25K = 'data/dataset/11-18-20T23-18-18$25000'
 
 
 def conv_ae_2():
-    path_dataset = 'data/dataset/11-18-20T23-18-18$25000'
     optimizer = 'adam'
-    conv_ae = ConvAE(path_dataset=path_dataset,
+    conv_ae = ConvAE(path_dataset=DS_25K,
                      name='conv_ae_2',
                      optimizer=optimizer)
 
-    conv_ae.train_model(epochs=3, batch_size=64)
+    conv_ae.train_model(epochs=200, batch_size=64)
 
 
 # def conv_ae_1():
