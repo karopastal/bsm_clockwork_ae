@@ -113,25 +113,15 @@ def main():
     cwt_generator.create(name='default')
 
     ds = Dataset(cwt_generator,
-                 train_size=25000,
-                 test_bg_size=5000,
-                 test_signal_size=5000)
+                 train_size=10000,
+                 test_bg_size=25000,
+                 test_signal_size=25000)
 
     # ds.build_train_dataset()
-    # ds.build_test_bg_dataset()
-    # ds.build_test_signal_dataset(m_5=6000, k=1000)
-    # ds.build_test_signal_dataset(m_5=6500, k=1000)
-    # ds.build_test_signal_dataset(m_5=7000, k=1000)
-    # ds.build_test_signal_dataset(m_5=7500, k=1000)
-
-    ds.build_test_signal_dataset(m_5=8000, k=1000)
-    ds.build_test_signal_dataset(m_5=8500, k=1000)
-    ds.build_test_signal_dataset(m_5=9000, k=1000)
-    ds.build_test_signal_dataset(m_5=9500, k=1000)
-    ds.build_test_signal_dataset(m_5=10000, k=1000)
-    ds.build_test_signal_dataset(m_5=10500, k=1000)
+    ds.build_test_bg_dataset()
+    ds.build_test_signal_dataset(m_5=6200, k=1000)
 
 
 if __name__ == '__main__':
-    pass
-    # main()
+    # pass
+    main()
