@@ -12,8 +12,8 @@ class ConvAE:
     def __init__(self,
                  path_model='',
                  path_dataset='',
-                 ae_type='conv_kl_ae',
-                 name='conv_kl_ae',
+                 ae_type='conv_ae',
+                 name='conv_ae',
                  optimizer='adam',
                  shape=(60, 56),
                  beta=3,
@@ -181,7 +181,8 @@ class ConvAE:
         #                             title,
         #                             file_name=[file_name, '_bg_signal'])
 
-    def create_loss_distribution(self, name, m_5=6000, k=1000, file_name=''):
+    def create_loss_distribution(self, m_5=6000, k=1000, file_name='', base_dir=''):
+
         test_bgs_data, test_signal_data = self.load_test_data(m_5=m_5, k=k)
 
         predict_bgs_test = self.predict(test_bgs_data)
@@ -192,17 +193,21 @@ class ConvAE:
 
         test_signal_distribution = model_utils.loss_distribution(test_signal_data,
                                                                  predict_signal_test.reshape(test_signal_data.shape))
+
         model_utils.plot_histogram(test_bgs_distribution.numpy(),
                                    test_signal_distribution.numpy(),
-                                   name,
-                                   file_name=file_name)
+                                   file_name=file_name,
+                                   base_dir=base_dir)
 
     def summary(self):
         return self.autoencoder_model.summary()
 
-    def plot_progress(self, title='', file_name=''):
+    def plot_progress(self, title='', file_name='', base_dir=''):
         if self.path_model != '':
-            model_utils.plot_progress(self.path_loss_progress, title=title, file_name=file_name)
+            model_utils.plot_progress(self.path_loss_progress,
+                                      base_dir=base_dir,
+                                      title=title,
+                                      file_name=file_name)
         else:
             print('error, load model first')
 

@@ -1,3 +1,4 @@
+from src.models.conv_ae import ConvAE
 from src.models.conv_kl_ae import ConvKLAE
 from src.models.conv_kl_ae_v1 import ConvKLAEV1
 from src.models.conv_kl_ae_v2 import ConvKLAEV2
@@ -8,6 +9,7 @@ import json
 TEST_DATASET = 'data/dataset/12-09-20T17-23-10$5000'
 
 MODELS = {
+    'conv_ae': ConvAE,
     'conv_kl_ae': ConvKLAE,
     'conv_kl_ae_v1': ConvKLAEV1,
     'conv_kl_ae_v2': ConvKLAEV2
