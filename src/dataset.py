@@ -113,9 +113,9 @@ def main():
     cwt_generator.create(name='default')
 
     ds = Dataset(cwt_generator,
-                 train_size=10000,
-                 test_bg_size=25000,
-                 test_signal_size=25000)
+                 train_size=10,
+                 test_bg_size=25,
+                 test_signal_size=25)
 
     # ds.build_train_dataset()
     ds.build_test_bg_dataset()

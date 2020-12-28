@@ -300,7 +300,7 @@ def conv_kl_ae_v2_3():
                          beta=beta,
                          optimizer=optimizer)
 
-    conv_ae.train_model(epochs=100, batch_size=64)
+    conv_ae.train_model(epochs=2, batch_size=64)
 
 
 # def conv_kl_ae_v2_1():
