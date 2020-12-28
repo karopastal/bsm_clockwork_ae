@@ -28,7 +28,7 @@ class ConvAE:
             self.path_autoencoder = self.path_model + '/autoencoder.h5'
             self.path_summary = self.path_model + '/summary.txt'
             self.path_loss_progress = self.path_model + '/training.log'
-            self.path_checkpoint_weights = self.path_model + 'checkpoint_weights.txt'
+            self.path_checkpoint_weights = self.path_model + '/checkpoint_weights'
 
             self.shape = shape
             self.autoencoder_model = load_model(self.path_autoencoder)
@@ -39,7 +39,7 @@ class ConvAE:
             self.path_autoencoder = self.base_dir + '/autoencoder.h5'
             self.path_summary = self.base_dir + '/summary.txt'
             self.path_csv_logger = self.base_dir + '/training.log'
-            self.path_checkpoint_weights = self.base_dir + 'checkpoint_weights.txt'
+            self.path_checkpoint_weights = self.base_dir + '/checkpoint_weights'
 
             self.shape = shape
             self.autoencoder_model = self.build_model()
