@@ -5,7 +5,7 @@ from keras.layers import Input, Dense, Flatten, Reshape
 from keras.layers import Conv2D, MaxPooling2D, UpSampling2D
 from keras.models import Model, load_model, Sequential
 from keras.optimizers import Adam
-from keras.callbacks import CSVLogger
+from keras.callbacks import CSVLogger, ModelCheckpoint
 
 
 class ConvAE:
@@ -28,6 +28,7 @@ class ConvAE:
             self.path_autoencoder = self.path_model + '/autoencoder.h5'
             self.path_summary = self.path_model + '/summary.txt'
             self.path_loss_progress = self.path_model + '/training.log'
+            self.path_checkpoint_weights = self.path_model + 'checkpoint_weights.txt'
 
             self.shape = shape
             self.autoencoder_model = load_model(self.path_autoencoder)
@@ -38,6 +39,7 @@ class ConvAE:
             self.path_autoencoder = self.base_dir + '/autoencoder.h5'
             self.path_summary = self.base_dir + '/summary.txt'
             self.path_csv_logger = self.base_dir + '/training.log'
+            self.path_checkpoint_weights = self.base_dir + 'checkpoint_weights.txt'
 
             self.shape = shape
             self.autoencoder_model = self.build_model()
@@ -105,12 +107,18 @@ class ConvAE:
 
         csv_logger = CSVLogger(self.path_csv_logger)
 
+        checkpoint = ModelCheckpoint(self.path_checkpoint_weights,
+                                     verbose=1,
+                                     monitor='val_loss',
+                                     save_best_only=True,
+                                     mode='auto')
+
         self.autoencoder_model.fit(train_bg, train_bg,
                                    epochs=epochs,
                                    batch_size=batch_size,
                                    shuffle=True,
                                    validation_data=(test_bg, test_bg),
-                                   callbacks=[csv_logger])
+                                   callbacks=[csv_logger, checkpoint])
 
         self.autoencoder_model.save(self.path_autoencoder)
 
@@ -235,32 +243,32 @@ def conv_ae_2():
     conv_ae.train_model(epochs=100, batch_size=64)
 
 
-def conv_ae_3():
-    path_dataset = 'data/dataset/11-18-20T23-18-18$25000'
-    optimizer = Adam(lr=0.0001)
-    conv_ae = ConvAE(path_dataset=path_dataset,
-                     name='conv_ae_3',
-                     optimizer=optimizer)
-
-    conv_ae.train_model(epochs=200, batch_size=64)
-
-
-def conv_ae_5():
-    path_dataset = 'data/dataset/11-18-20T23-18-18$25000'
-    optimizer = 'adam'
-    conv_ae = ConvAE(path_dataset=path_dataset,
-                     name='conv_ae_5',
-                     optimizer=optimizer)
-
-    conv_ae.train_model(epochs=500, batch_size=1000)
-
-
-def conv_ae_4():
-    path_dataset = 'data/dataset/11-18-20T23-18-18$25000'
-    optimizer = Adam(lr=0.0001)
-    conv_ae = ConvAE(path_dataset=path_dataset,
-                     name='conv_ae_4',
-                     optimizer=optimizer)
-
-    conv_ae.train_model(epochs=25, batch_size=64)
+# def conv_ae_3():
+#     path_dataset = 'data/dataset/11-18-20T23-18-18$25000'
+#     optimizer = Adam(lr=0.0001)
+#     conv_ae = ConvAE(path_dataset=path_dataset,
+#                      name='conv_ae_3',
+#                      optimizer=optimizer)
+#
+#     conv_ae.train_model(epochs=200, batch_size=64)
+#
+#
+# def conv_ae_5():
+#     path_dataset = 'data/dataset/11-18-20T23-18-18$25000'
+#     optimizer = 'adam'
+#     conv_ae = ConvAE(path_dataset=path_dataset,
+#                      name='conv_ae_5',
+#                      optimizer=optimizer)
+#
+#     conv_ae.train_model(epochs=500, batch_size=1000)
+#
+#
+# def conv_ae_4():
+#     path_dataset = 'data/dataset/11-18-20T23-18-18$25000'
+#     optimizer = Adam(lr=0.0001)
+#     conv_ae = ConvAE(path_dataset=path_dataset,
+#                      name='conv_ae_4',
+#                      optimizer=optimizer)
+#
+#     conv_ae.train_model(epochs=25, batch_size=64)
 

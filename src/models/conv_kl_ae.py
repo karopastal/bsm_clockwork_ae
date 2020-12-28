@@ -8,7 +8,7 @@ from keras import regularizers
 from keras.layers import Input, Dense, Flatten, Reshape
 from keras.layers import Conv2D, MaxPooling2D, UpSampling2D
 from keras.models import Model, load_model, Sequential
-from keras.callbacks import CSVLogger
+from keras.callbacks import CSVLogger, ModelCheckpoint
 
 
 def kl_divergence(rho, rho_hat):
@@ -55,6 +55,8 @@ class ConvKLAE:
             self.path_autoencoder = self.path_model + '/autoencoder.h5'
             self.path_summary = self.path_model + '/summary.txt'
             self.path_loss_progress = self.path_model + '/training.log'
+            self.path_checkpoint_weights = self.path_model + 'checkpoint_weights.txt'
+
 
             self.shape = shape
 
@@ -68,6 +70,7 @@ class ConvKLAE:
             self.path_autoencoder = self.base_dir + '/autoencoder.h5'
             self.path_summary = self.base_dir + '/summary.txt'
             self.path_csv_logger = self.base_dir + '/training.log'
+            self.path_checkpoint_weights = self.base_dir + 'checkpoint_weights.txt'
 
             self.rho = rho
             self.beta = beta
@@ -160,12 +163,18 @@ class ConvKLAE:
 
         csv_logger = CSVLogger(self.path_csv_logger)
 
+        checkpoint = ModelCheckpoint(self.path_checkpoint_weights,
+                                     verbose=1,
+                                     monitor='val_loss',
+                                     save_best_only=True,
+                                     mode='auto')
+
         self.autoencoder_model.fit(train_bg, train_bg,
                                    epochs=epochs,
                                    batch_size=batch_size,
                                    shuffle=True,
                                    validation_data=(test_bg, test_bg),
-                                   callbacks=[csv_logger])
+                                   callbacks=[csv_logger, checkpoint])
 
         self.autoencoder_model.save(self.path_autoencoder)
 
@@ -280,48 +289,6 @@ DS_5K = 'data/dataset/12-09-20T17-23-10$5000'
 DS_25K = 'data/dataset/11-18-20T23-18-18$25000'
 
 
-def conv_kl_ae_1():
-    rho = 0.05
-    beta = 3
-    optimizer = 'adam'
-
-    conv_ae = ConvKLAE(path_dataset=DS_5K,
-                       name='conv_kl_ae_1',
-                       rho=rho,
-                       beta=beta,
-                       optimizer=optimizer)
-
-    conv_ae.train_model(epochs=100, batch_size=64)
-
-
-def conv_kl_ae_2():
-    rho = 0.05
-    beta = 3
-    optimizer = 'adam'
-
-    conv_ae = ConvKLAE(path_dataset=DS_25K,
-                       name='conv_kl_ae_2',
-                       rho=rho,
-                       beta=beta,
-                       optimizer=optimizer)
-
-    conv_ae.train_model(epochs=100, batch_size=64)
-
-
-def conv_kl_ae_3():
-    rho = 0.01
-    beta = 3
-    optimizer = 'adam'
-
-    conv_ae = ConvKLAE(path_dataset=DS_5K,
-                       name='conv_kl_ae_3',
-                       rho=rho,
-                       beta=beta,
-                       optimizer=optimizer)
-
-    conv_ae.train_model(epochs=100, batch_size=64)
-
-
 def conv_kl_ae_4():
     rho = 0.01
     beta = 3
@@ -336,29 +303,71 @@ def conv_kl_ae_4():
     conv_ae.train_model(epochs=100, batch_size=64)
 
 
-def conv_kl_ae_5():
-    rho = 0.25
-    beta = 3
-    optimizer = 'adam'
+# def conv_kl_ae_1():
+#     rho = 0.05
+#     beta = 3
+#     optimizer = 'adam'
+#
+#     conv_ae = ConvKLAE(path_dataset=DS_5K,
+#                        name='conv_kl_ae_1',
+#                        rho=rho,
+#                        beta=beta,
+#                        optimizer=optimizer)
+#
+#     conv_ae.train_model(epochs=100, batch_size=64)
 
-    conv_ae = ConvKLAE(path_dataset=DS_5K,
-                       name='conv_kl_ae_5',
-                       rho=rho,
-                       beta=beta,
-                       optimizer=optimizer)
 
-    conv_ae.train_model(epochs=100, batch_size=64)
+# def conv_kl_ae_2():
+#     rho = 0.05
+#     beta = 3
+#     optimizer = 'adam'
+#
+#     conv_ae = ConvKLAE(path_dataset=DS_25K,
+#                        name='conv_kl_ae_2',
+#                        rho=rho,
+#                        beta=beta,
+#                        optimizer=optimizer)
+#
+#     conv_ae.train_model(epochs=100, batch_size=64)
+#
+#
+# def conv_kl_ae_3():
+#     rho = 0.01
+#     beta = 3
+#     optimizer = 'adam'
+#
+#     conv_ae = ConvKLAE(path_dataset=DS_5K,
+#                        name='conv_kl_ae_3',
+#                        rho=rho,
+#                        beta=beta,
+#                        optimizer=optimizer)
+#
+#     conv_ae.train_model(epochs=100, batch_size=64)
 
 
-def conv_kl_ae_6():
-    rho = 0.25
-    beta = 3
-    optimizer = 'adam'
-
-    conv_ae = ConvKLAE(path_dataset=DS_25K,
-                       name='conv_kl_ae_6',
-                       rho=rho,
-                       beta=beta,
-                       optimizer=optimizer)
-
-    conv_ae.train_model(epochs=100, batch_size=64)
+# def conv_kl_ae_5():
+#     rho = 0.25
+#     beta = 3
+#     optimizer = 'adam'
+#
+#     conv_ae = ConvKLAE(path_dataset=DS_5K,
+#                        name='conv_kl_ae_5',
+#                        rho=rho,
+#                        beta=beta,
+#                        optimizer=optimizer)
+#
+#     conv_ae.train_model(epochs=100, batch_size=64)
+#
+#
+# def conv_kl_ae_6():
+#     rho = 0.25
+#     beta = 3
+#     optimizer = 'adam'
+#
+#     conv_ae = ConvKLAE(path_dataset=DS_25K,
+#                        name='conv_kl_ae_6',
+#                        rho=rho,
+#                        beta=beta,
+#                        optimizer=optimizer)
+#
+#     conv_ae.train_model(epochs=100, batch_size=64)
