@@ -58,12 +58,12 @@ class ConvKLAE:
             self.path_checkpoint_weights = self.path_model + '/checkpoint_weights'
             self.shape = shape
 
-            # custom_objects = {'SparsityRegularizer': SparsityRegularizer}
-            # self.autoencoder_model = load_model(self.path_autoencoder,
-            #                                     custom_objects=custom_objects)
+            custom_objects = {'SparsityRegularizer': SparsityRegularizer}
+            self.autoencoder_model = load_model(self.path_autoencoder,
+                                                custom_objects=custom_objects)
 
-            self.autoencoder_model = self.build_model()
-            self.autoencoder_model.load_weights(self.path_checkpoint_weights)
+            # self.autoencoder_model = self.build_model()
+            # self.autoencoder_model.load_weights(self.path_checkpoint_weights)
 
         else:
             self.path_dataset = path_dataset
