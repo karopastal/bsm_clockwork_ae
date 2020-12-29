@@ -56,14 +56,15 @@ class ConvKLAE:
             self.path_summary = self.path_model + '/summary.txt'
             self.path_loss_progress = self.path_model + '/training.log'
             self.path_checkpoint_weights = self.path_model + '/checkpoint_weights'
-
-
             self.shape = shape
 
-            custom_objects = {'SparsityRegularizer': SparsityRegularizer}
+            # custom_objects = {'SparsityRegularizer': SparsityRegularizer}
+            # self.autoencoder_model = load_model(self.path_autoencoder,
+            #                                     custom_objects=custom_objects)
 
-            self.autoencoder_model = load_model(self.path_autoencoder,
-                                                custom_objects=custom_objects)
+            self.autoencoder_model = self.build_model()
+            self.autoencoder_model.load_weights(self.path_checkpoint_weights)
+
         else:
             self.path_dataset = path_dataset
             self.base_dir = model_utils.get_ae_base_dir(self.ae_type, self.name)

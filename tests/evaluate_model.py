@@ -6,7 +6,7 @@ from src.models.conv_kl_ae_v2 import ConvKLAEV2
 import sys
 import json
 
-TEST_DATASET = 'data/dataset/12-09-20T17-23-10$5000'
+TEST_DATASET = 'data/dataset/12-28-20T16-12-13$10000'
 
 MODELS = {
     'conv_ae': ConvAE,
@@ -31,17 +31,23 @@ def eval_model(model, file_name='', base_dir='', title=''):
 def main():
 
     model_path = sys.argv[1]
-    config_path = model_path + '/config.json'
 
-    with open(config_path) as f:
-        config = json.load(f)
+    model_type = model_path.split("/")[-3]
+    model_name = model_path.split("/")[-2]
 
-    model_type = config['base_dir'].split("/")[-3]
-    model_name = config['base_dir'].split("/")[-2]
+    if model_type == 'conv_ae':
+        rho = 0
+        beta = 0
+    else:
+        config_path = model_path + '/config.json'
 
-    title = '%s rho: %s, beta: %s' % (model_name,
-                                      config['rho'],
-                                      config['beta'])
+        with open(config_path) as f:
+            config = json.load(f)
+
+        rho = config['rho']
+        beta = config['beta']
+
+    title = '%s rho: %s, beta: %s' % (model_name, rho, beta)
 
     ae = MODELS[model_type](path_model=model_path,
                             path_dataset=TEST_DATASET)
