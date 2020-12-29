@@ -17,10 +17,7 @@ export path_to_python="/bin/python3"
 #    '7500'
 #    '8000')
 
-K=('200'
-   '400'
-   '600'
-   '800'
+K=('800'
    '1000')
 
 M5=('6000'
@@ -38,6 +35,6 @@ for k in "${K[@]}"
       export script_path="/gpfs0/kats/users/talpas/projects/bsm_clockwork_ae/scripts/build_grid.py $params"
       qsub -cwd -q kats.q -S $path_to_python $script_path
     done
-      echo "sleeping: 1 hour"
-      sleep 3600
+#      echo "sleeping: 1 hour"
+#      sleep 3600
   done
