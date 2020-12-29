@@ -55,7 +55,7 @@ class ConvKLAEV2:
             self.path_autoencoder = self.path_model + '/autoencoder.h5'
             self.path_summary = self.path_model + '/summary.txt'
             self.path_loss_progress = self.path_model + '/training.log'
-            self.path_checkpoint_weights = self.path_model + 'checkpoint_weights'
+            self.path_checkpoint_weights = self.path_model + '/checkpoint_weights'
             self.shape = shape
 
             custom_objects = {'SparsityRegularizer': SparsityRegularizer}
