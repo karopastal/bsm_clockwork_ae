@@ -11,6 +11,8 @@ BASEDIR = 'data/dataset'
 class Dataset:
     def __init__(self,
                  cwt_generator,
+                 path='',
+                 logger='',
                  train_size=25000,
                  test_bg_size=5000,
                  test_signal_size=5000):
@@ -20,13 +22,17 @@ class Dataset:
         self.test_bg_size = test_bg_size
         self.test_signal_size = test_signal_size
 
-        self.path = self.__generate_path()
-        self.path_log = self.path + '/progress.log'
+        if path != '':
+            self.path = path
+        else:
+            self.path = self.__generate_path()
+
+        self.path_log = self.path + '/progress_%s.log' % logger
         self.path_train = self.path + '/train_background.npy'
         self.path_test_background = self.path + '/test_background.npy'
         self.path_test_signal = self.path + '/test_signal'
 
-        self.__init_logger()
+        self.__init_logger(logger)
         logging.info('Init dataset')
 
     @staticmethod
@@ -42,7 +48,7 @@ class Dataset:
 
         return path
 
-    def __init_logger(self):
+    def __init_logger(self, logger):
         for handler in logging.root.handlers[:]:
             logging.root.removeHandler(handler)
 
@@ -96,11 +102,11 @@ class Dataset:
         arrays = []
 
         for i in range(self.test_signal_size):
-            record = self.cwt_generator.yield_background_signal()
-            arrays.append(record)
-
             if i % 500 == 0:
                 logging.info('STATUS: ' + str((i/self.test_signal_size)*100))
+
+            record = self.cwt_generator.yield_background_signal()
+            arrays.append(record)
 
         dataset = np.stack(arrays, axis=0)
         np.save(path_signal, dataset)
