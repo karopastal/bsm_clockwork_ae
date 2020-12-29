@@ -10,7 +10,7 @@ export path_to_python="/bin/python3"
 #'data/models/conv_kl_ae_v2/conv_kl_ae_v2_3/Dec-28-20_T_17-27-13'
 #'data/models/conv_kl_ae_v2/conv_kl_ae_v2_7/Dec-28-20_T_20-08-42'
 
-MODEL_PATHS=('data/models/conv_ae/conv_ae_parity_ae_parity_ds_1000/Dec-10-20_T_12-32-35')
+MODEL_PATHS=('data/models/conv_ae/conv_ae_parity_ae_parity_ds_1000/Dec-09-20_T_18-02-46')
 
 for path in "${MODEL_PATHS[@]}"
 do
