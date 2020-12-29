@@ -32,7 +32,7 @@ class ConvAE:
 
             self.shape = shape
 
-            self.autoencoder_model = load_model(self.path_checkpoint_weights)
+            self.autoencoder_model = load_model(self.path_autoencoder)
 
             # self.autoencoder_model = self.build_model()
             # self.autoencoder_model.load_weights(self.path_checkpoint_weights)
