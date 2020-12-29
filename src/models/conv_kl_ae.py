@@ -59,7 +59,7 @@ class ConvKLAE:
             self.shape = shape
 
             custom_objects = {'SparsityRegularizer': SparsityRegularizer}
-            self.autoencoder_model = load_model(self.path_autoencoder,
+            self.autoencoder_model = load_model(self.path_checkpoint_weights,
                                                 custom_objects=custom_objects)
 
             # self.autoencoder_model = self.build_model()
