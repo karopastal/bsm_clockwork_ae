@@ -47,7 +47,7 @@ def main():
         rho = config['rho']
         beta = config['beta']
 
-    title = '%s rho: %s, beta: %s' % (model_name, rho, beta)
+    title = '%s rho: %s, beta: %s' % (model_name[:14], rho, beta)
 
     ae = MODELS[model_type](path_model=model_path,
                             path_dataset=TEST_DATASET)
