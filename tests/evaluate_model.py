@@ -54,7 +54,7 @@ def main():
 
     eval_model(ae,
                base_dir=model_path,
-               file_name=model_name,
+               file_name=model_name[:14],
                title=title)
 
 
