@@ -60,7 +60,7 @@ class ConvKLAEV2:
 
             custom_objects = {'SparsityRegularizer': SparsityRegularizer}
 
-            self.autoencoder_model = load_model(self.path_checkpoint_weights,
+            self.autoencoder_model = load_model(self.path_autoencoder,
                                                 custom_objects=custom_objects)
 
             # self.autoencoder_model = self.build_model()
