@@ -55,7 +55,7 @@ for k in "${K[@]}"
   do
   for m5 in "${M5[@]}"
     do
-      params="m5@${m5}@k@${k}@m${MODEL_PATH}"
+      params="m5@${m5}@k@${k}@${MODEL_PATH}"
       echo "processing: ${params}"
       export script_path="/gpfs0/kats/users/talpas/projects/bsm_clockwork_ae/scripts/build_grid.py $params"
       qsub -cwd -q kats.q -S $path_to_python $script_path
