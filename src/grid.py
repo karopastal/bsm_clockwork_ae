@@ -19,6 +19,10 @@ def init_logger():
 
 # models = dict()
 
+def evaluate_p_value():
+    # todo: write p_value of point (m_5, k) => (m_5, k, p_value)
+    pass
+
 
 def main():
     m_5 = int(sys.argv[1].split("_")[1])
