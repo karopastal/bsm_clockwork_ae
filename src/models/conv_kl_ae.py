@@ -59,7 +59,7 @@ class ConvKLAE:
             self.shape = shape
 
             custom_objects = {'SparsityRegularizer': SparsityRegularizer}
-            self.autoencoder_model = load_model(self.path_autoencoder,
+            self.autoencoder_model = load_model(self.path_checkpoint_weights,
                                                 custom_objects=custom_objects)
 
             # self.autoencoder_model = self.build_model()
@@ -263,6 +263,22 @@ class ConvKLAE:
                                    test_signal_distribution.numpy(),
                                    file_name=file_name,
                                    base_dir=base_dir)
+
+    def calc_p_value(self, m_5, k):
+        test_bgs_data, test_signal_data = self.load_test_data(m_5=m_5, k=k)
+
+        predict_bgs_test = self.predict(test_bgs_data)
+        predict_signal_test = self.predict(test_signal_data)
+
+        test_bgs_distribution = model_utils.loss_distribution(test_bgs_data,
+                                                              predict_bgs_test.reshape(test_bgs_data.shape))
+
+        test_signal_distribution = model_utils.loss_distribution(test_signal_data,
+                                                                 predict_signal_test.reshape(test_signal_data.shape))
+
+        p_value = model_utils.model_efficiency_p_value(test_bgs_distribution.numpy(), test_signal_distribution.numpy())
+
+        return p_value
 
     def summary(self):
         return self.autoencoder_model.summary()
