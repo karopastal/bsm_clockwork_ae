@@ -129,8 +129,24 @@ def plot():
 
     z = transform_z_to_grid(p_values_3d, m5_xx, k_yy)
 
+    fig, ax = plt.subplots(figsize=(9, 7))
+
     h = plt.contour(m5_x, k_y, z)
+
+    cbar = fig.colorbar(h, ax=ax)
+    cbar.ax.tick_params(labelsize=18)
+
+    plt.title('Counter plot (M5, K, Pvalue)', fontsize=20)
+    plt.ylabel('K', fontsize=18)
+    plt.xlabel('M5', fontsize=18)
+    plt.xticks(fontsize=18)
+    plt.yticks(fontsize=18)
+
     plt.show()
+
+
+def print_grid():
+    pass
 
 
 def main():
