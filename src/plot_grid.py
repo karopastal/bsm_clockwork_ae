@@ -21,6 +21,10 @@ MODELS = {
     'conv_kl_ae_v2': ConvKLAEV2
 }
 
+NAMES = ['conv_kl_ae_v2_7',
+         'conv_kl_ae_4',
+         'conv_ae_parity_ae_parity_ds_1000']
+
 K = [200, 400, 600, 800, 1000]
 M5 = [6000, 6500, 7000, 7500, 8000]
 
@@ -49,26 +53,105 @@ def get_data(model_name):
     return np.array(data)
 
 
-def plot(data):
-    m5 = data[:, 0]
-    k = data[:, 1]
+def aggregate():
+    for model_name in NAMES:
+        path = 'data/grid/results/%s' % model_name
+        os.makedirs(path, exist_ok=True)
 
-    p_value = data[:, 2]
+        data = get_data(model_name)
 
-    plt.contour((m5, k, p_value))
+        print(path, data.shape)
+
+        np.save(path + '/m_5_k_pvalue_3d.npy', data)
+
+
+def load_aggregated():
+    models_data = dict()
+
+    models_data['conv_kl_ae_v2_7'] = np.load(
+        'data/grid/results/conv_kl_ae_v2_7/m_5_k_pvalue_3d.npy'
+    )
+
+    models_data['conv_kl_ae_4'] = np.load(
+        'data/grid/results/conv_kl_ae_4/m_5_k_pvalue_3d.npy'
+    )
+
+    models_data['conv_ae_parity_ae_parity_ds_1000'] = np.load(
+        'data/grid/results/conv_ae_parity_ae_parity_ds_1000/m_5_k_pvalue_3d.npy'
+    )
+
+    return models_data
+
+
+def transform_x_y_to_grid():
+    m5_x = np.arange(1000, 8100, 100)
+    k_y = np.arange(0, 3100, 100)
+
+    m5_xx, k_yy = np.meshgrid(m5_x, k_y)
+
+    return m5_xx, k_yy
+
+
+def transform_z_to_grid(p_values_3d, m5_xx, k_yy):
+
+    z = np.zeros(m5_xx.shape)
+
+    for point in p_values_3d:
+        m5 = point[0]
+        k = point[1]
+        p_value = point[2]
+
+        x = np.where(m5_xx == m5)[1][0]
+        y = np.where(k_yy == k)[0][0]
+
+        # print(x, y)
+
+        z[int(y), int(x)] = p_value
+
+    print(z.shape)
+
+    return z
+
+
+def plot():
+    models_data = load_aggregated()
+
+    m5 = models_data['conv_ae_parity_ae_parity_ds_1000'][:, 0]
+    k = models_data['conv_ae_parity_ae_parity_ds_1000'][:, 1]
+    p_value = models_data['conv_ae_parity_ae_parity_ds_1000'][:, 2]
+
+    p_values_3d = models_data['conv_ae_parity_ae_parity_ds_1000']
+
+    m5_xx, k_yy = transform_x_y_to_grid()
+
+    m5_x = np.arange(1000, 8100, 100)
+    k_y = np.arange(0, 3100, 100)
+
+    z = transform_z_to_grid(p_values_3d, m5_xx, k_yy)
+
+    h = plt.contour(m5_x, k_y, z)
     plt.show()
 
 
 def main():
-    model_path = sys.argv[1].split("@")[4]
-    model_name = model_path.split("/")[-2]
+    pass
+    # collect points and aggregate by model
+    # aggregate()
 
-    grid_path = 'data/grid/%s' % model_name
-    os.makedirs(grid_path, exist_ok=True)
+    plot()
+
+    # model_path = sys.argv[1].split("@")[4]
+    # model_name = model_path.split("/")[-2]
+
+    # grid_path = 'data/grid/%s' % model_name
+    # os.makedirs(grid_path, exist_ok=True)
 
     # data = get_data(model_path, model_type, model_name)
-    data = get_data(model_name)
-    plot(data)
+    # data = get_data(model_name)
+    # print(model_name, data.shape)
+    # plot(data)
+
+
 
 
 if __name__ == "__main__":
